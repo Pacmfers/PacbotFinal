@@ -35,40 +35,40 @@ if (!client) {
 }
 
 // Function to dynamically import node-fetch
-async function fetchNftMetadata(tokenId) {
-    const fetch = await import('node-fetch').then(mod => mod.default);
-    try {
-        // Fetch metadata from token URI
-        const tokenUri = await nftContract.methods.tokenURI(tokenId).call();
-        console.log(`Fetching metadata from: ${tokenUri}`);
-        const response = await fetch(tokenUri);
-        const metadata = await response.json();
-        console.log(`Metadata fetched: ${JSON.stringify(metadata)}`);
-        return metadata;
-    } catch (error) {
-        console.error('Error fetching metadata:', error);
-        return null;
-    }
-}
+// async function fetchNftMetadata(tokenId) {
+//     const fetch = await import('node-fetch').then(mod => mod.default);
+//     try {
+//         // Fetch metadata from token URI
+//         const tokenUri = await nftContract.methods.tokenURI(tokenId).call();
+//         console.log(`Fetching metadata from: ${tokenUri}`);
+//         const response = await fetch(tokenUri);
+//         const metadata = await response.json();
+//         console.log(`Metadata fetched: ${JSON.stringify(metadata)}`);
+//         return metadata;
+//     } catch (error) {
+//         console.error('Error fetching metadata:', error);
+//         return null;
+//     }
+// }
 
 // Function to send mint message
-function sendMintMessage(tokenId, to, metadata) {
-    const channel = client.channels.cache.get(process.env.CHANNEL_ID); // Replace with your channel ID
-    if (channel && metadata) {
-        // Create embed message
-        const embed = new EmbedBuilder()
-            .setTitle('New NFT Minted!')
-            .setDescription(`Token ID: ${tokenId}\nTo: ${to}`)
-            .setImage(metadata.image)
-            .setTimestamp()
-            .setFooter({ text: 'NFT Mint Bot', iconURL: client.user.avatarURL() });
+// function sendMintMessage(tokenId, to, metadata) {
+//     const channel = client.channels.cache.get(process.env.CHANNEL_ID); // Replace with your channel ID
+//     if (channel && metadata) {
+//         // Create embed message
+//         const embed = new EmbedBuilder()
+//             .setTitle('New NFT Minted!')
+//             .setDescription(`Token ID: ${tokenId}\nTo: ${to}`)
+//             .setImage(metadata.image)
+//             .setTimestamp()
+//             .setFooter({ text: 'NFT Mint Bot', iconURL: client.user.avatarURL() });
 
-        // Send embed message to channel
-        channel.send({ embeds: [embed] });
-    } else {
-        console.error('Channel not found or metadata not available!');
-    }
-}
+//         // Send embed message to channel
+//         channel.send({ embeds: [embed] });
+//     } else {
+//         console.error('Channel not found or metadata not available!');
+//     }
+// }
 
 // Set up event listener for NFT minting
 const eventEvents = () => {
@@ -77,11 +77,11 @@ const eventEvents = () => {
     nftevent
         .on('data', async event => {
             console.log(event);
-            const tokenId = event.returnValues.tokenId;
-            const to = event.returnValues.to;
-            console.log(`New NFT minted! Token ID: ${tokenId} To: ${to}`);
-            const metadata = await fetchNftMetadata(tokenId);
-            sendMintMessage(tokenId, to, metadata);
+            // const tokenId = event.returnValues.tokenId;
+            // const to = event.returnValues.to;
+            // console.log(`New NFT minted! Token ID: ${tokenId} To: ${to}`);
+            // const metadata = await fetchNftMetadata(tokenId);
+            // sendMintMessage(tokenId, to, metadata);
         })
         // .on('error', error => {
         //     console.error('Error in event listener:', error);
